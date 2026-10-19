@@ -14,7 +14,7 @@
       }
     }
   }
-  fixImagePaths(S);
+  if (S) fixImagePaths(S);
   const $ = id => document.getElementById(id);
   if (!S) { document.body.insertAdjacentHTML('beforeend','<p style="color:red">story-data.js 파일을 확인하세요.</p>'); return; }
   const txt = (node, value) => { node.textContent = String(value ?? ''); return node; };
