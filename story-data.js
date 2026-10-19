@@ -112,7 +112,7 @@ CJ대한통운 매일오네(O-NE)
       following: '7',
       bio: '💜\n🔒 private archive',
       posts: [
-        { image: 'assets/insta-secret-shoes.jpg', caption: '여기에 비계 게시물 문구 쓰기', date: '2026-10-19' }
+        { image: 'assets/insta-secret-shoes.jpg', caption: '💜', date: '2026-10-19' }
       ]
     }
   },
