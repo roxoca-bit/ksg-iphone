@@ -34,8 +34,39 @@
 .ig-post-social{padding:7px 14px 0;font-size:13px}.ig-post-social strong{font-weight:750}
 .ig-post-caption{padding:7px 14px 5px;font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
 .ig-post-date{padding:1px 14px 30px;font-size:12px;color:#8d8d8d}
+
+/* iPhone passcode lock */
+.passcode{color:#fff;text-align:center;background:transparent;z-index:3;padding-top:clamp(175px,28vh,240px);}
+.passcode-title{font-size:19px;line-height:1.35;font-weight:400;margin:0 18px 17px;text-shadow:0 1px 5px #0005}
+.passcode-dots{display:flex;justify-content:center;gap:21px;margin-bottom:clamp(40px,7vh,64px)}
+.passcode-dots i{width:13px;height:13px;border:1.8px solid white;border-radius:50%;display:block;background:transparent}
+.passcode-dots i.filled{background:#fff}
+.passcode-keys{width:min(315px,90%);display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;row-gap:clamp(15px,3vh,28px);margin:auto}
+.passcode-key{width:clamp(70px,20vw,83px);height:clamp(70px,20vw,83px);border-radius:50%;background:#e6f0f72b;border:1px solid #ffffff79;color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);padding:0;touch-action:manipulation}
+.passcode-key:active{background:#ffffff75}.passcode-key strong{font-weight:350;line-height:1;font-size:37px}.passcode-key small{font-size:9px;letter-spacing:2px;font-weight:800;min-height:11px;margin-top:3px}
+.passcode-key.zero{grid-column:2}.passcode-footer{position:absolute;bottom:45px;left:18px;right:18px;display:flex;justify-content:space-between;padding:0 30px}.passcode-footer button{background:none;border:0;color:white;font-size:14px;padding:10px 0}
+.passcode-error{min-height:20px;font-size:13px;color:#fff;display:block;margin-top:8px}
+@media(max-height:690px){.passcode{padding-top:110px}.passcode-dots{margin-bottom:20px}.passcode-keys{row-gap:8px}.passcode-key{width:62px;height:62px}.passcode-key strong{font-size:29px}.passcode-footer{bottom:17px}}
 </style></head><body><div class="phone"><div class="wall" id="wall"></div><div class="shade" id="shade"></div><div class="island"></div><div class="status" id="status"><span id="statusTime">9:12</span><span class="status-right">▂▄▆ 5G ▰ <span id="battery">78</span></span></div>
 <section class="view lock active" id="lock"><div class="lock-date" id="lockDate">10월 19일 (월)</div><div class="lock-time" id="lockTime">9:12</div><div class="unlock">⌃<p>탭하여 열기</p></div></section>
+<section class="view passcode" id="passcode" aria-label="암호 입력 화면">
+  <div class="passcode-title">위로 쓸어올려서 Face ID 사용 또는 암호<br>입력</div>
+  <div class="passcode-dots" id="passcodeDots" aria-label="암호 0자리 입력됨"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="passcode-keys" id="passcodeKeys">
+    <button class="passcode-key" data-digit="1"><strong>1</strong><small>　</small></button>
+    <button class="passcode-key" data-digit="2"><strong>2</strong><small>ABC</small></button>
+    <button class="passcode-key" data-digit="3"><strong>3</strong><small>DEF</small></button>
+    <button class="passcode-key" data-digit="4"><strong>4</strong><small>GHI</small></button>
+    <button class="passcode-key" data-digit="5"><strong>5</strong><small>JKL</small></button>
+    <button class="passcode-key" data-digit="6"><strong>6</strong><small>MNO</small></button>
+    <button class="passcode-key" data-digit="7"><strong>7</strong><small>PQRS</small></button>
+    <button class="passcode-key" data-digit="8"><strong>8</strong><small>TUV</small></button>
+    <button class="passcode-key" data-digit="9"><strong>9</strong><small>WXYZ</small></button>
+    <button class="passcode-key zero" data-digit="0"><strong>0</strong><small>　</small></button>
+  </div>
+  <span class="passcode-error" id="passcodeError" aria-live="polite"></span>
+  <div class="passcode-footer"><button id="emergencyBtn" type="button">긴급 상황</button><button id="passcodeCancel" type="button">취소</button></div>
+</section>
 <section class="view home" id="home"><div class="home-label" id="owner">강슬기의 iPhone</div><div class="apps"><button class="app-button" data-go="kakao"><img src="kakao.jpg" alt="카카오톡">카카오톡</button><button class="app-button" data-go="instagram"><img src="instagram.jpg" alt="인스타그램">Instagram</button><button class="app-button" data-go="photos"><img src="photos.jpg" alt="사진">사진</button><button class="app-button" data-go="notes"><img src="notes.jpg" alt="메모 아이콘">메모</button><button class="app-button" disabled aria-label="카메라는 비활성화되어 있습니다"><img src="camera.jpg" alt="카메라">카메라</button></div><div class="dock"><button class="app-button" data-go="phone"><img src="phone.jpg" alt="전화"></button><button class="app-button" data-go="safari"><img src="safari.jpg" alt="Safari"></button><button class="app-button" data-go="messages"><img src="messages.jpg" alt="메시지"></button><button class="app-button" data-go="music"><img src="music.jpg" alt="음악"></button></div></section>
 <section class="view screen" id="phone"><div class="header center"><button class="headbtn" data-go="home">〈 홈</button><h2>통화</h2><span>☰</span></div><div class="scroll" id="calls"></div><div class="tabbar"><button class="selected">◷</button><button>◉</button><button>▦</button><button>⌕</button></div></section>
 <section class="view screen" id="messages"><div class="header"><button class="headbtn" data-go="home">〈</button><h2>메시지</h2><span>☰</span></div><div class="scroll" id="messageList"></div><div class="tabbar"><button>⌕ 검색</button><button>✎</button></div></section>
@@ -82,13 +113,13 @@ const STORY={
  {id:'m3',name:'택배',avatar:'택배',time:'금요일',messages:[{from:'them',text:'[Web발신][CJ대한통운_배송완료]\n고객님의 상품이 배송 완료되었습니다.\n보내는분 : WEVERSE COMPANY\n인수자(위탁장소) : 문앞',time:'금요일 오전 10:22'}]}
  ],
  kakaoRooms:[
- {id:'k1',name:'주현언니',profile:'',time:'오후 9:00',unread:0,messages:[
+ {id:'k1',name:'주현언니',profile:'profile-juhyeon.jpg',time:'오후 9:00',unread:0,messages:[
  {from:'them',text:'어디야?',date:'2026년 10월 16일 금요일',time:'오후 9:19'},{from:'me',text:'저 연습실이용',date:'2026년 10월 16일 금요일',time:'오후 9:19'},{from:'them',text:'이따가 너네 집 가도 돼?',date:'2026년 10월 16일 금요일',time:'오후 9:19'},{from:'me',text:'무슨 일 있어요?',date:'2026년 10월 16일 금요일',time:'오후 9:20'},{from:'them',text:'그냥 별 거 아냐 이따가 이야기하자',date:'2026년 10월 16일 금요일',time:'오후 9:25'},
  {from:'them',text:'일본 가면 호텔에서 룸서비스 시켜 먹을 거야?',date:'2026년 10월 17일 토요일',time:'오전 8:09'},{from:'me',text:'도착하면 내 방으로 올래요?',date:'2026년 10월 17일 토요일',time:'오전 9:21'},{from:'them',text:'알겠엉',date:'2026년 10월 17일 토요일',time:'오전 10:19'},{from:'me',text:'다 씻었어요?',date:'2026년 10월 17일 토요일',time:'오후 8:43'},{from:'them',text:'지금 갈게',date:'2026년 10월 17일 토요일',time:'오후 8:50'},{from:'them',text:'할 얘기도 있구',date:'2026년 10월 17일 토요일',time:'오후 8:51'},{from:'me',text:'저번에도 할 얘기 있다고 해놓고 안 했으면서 ㅋㅋㅋㅋ',date:'2026년 10월 17일 토요일',time:'오후 8:56'},{from:'me',text:'오늘은 진짜예요?',date:'2026년 10월 17일 토요일',time:'오후 8:56'},{from:'them',text:'ㅋㅋㅋㅋㅋㅋ몰라',date:'2026년 10월 17일 토요일',time:'오후 9:00'}]},
- {id:'k2',name:'승와니',profile:'',time:'오후 9:50',unread:0,messages:[
+ {id:'k2',name:'승와니',profile:'profile-default-blue.jpg',time:'오후 9:50',unread:0,messages:[
  {from:'them',text:'야 뭐해?',date:'2026년 10월 16일 금요일',time:'오후 8:49'},{from:'me',text:'마지막 연습 중',date:'2026년 10월 16일 금요일',time:'오후 9:19'},{from:'them',text:'저녁 먹을래?',date:'2026년 10월 16일 금요일',time:'오후 9:19'},{from:'me',text:'이따가 집에 주현언니 온대',date:'2026년 10월 16일 금요일',time:'오후 9:20'},{from:'them',text:'아직 주현언니가 얘기 안 했어?',date:'2026년 10월 16일 금요일',time:'오후 9:23'},{from:'them',text:'둘이 삽질 레전드다',date:'2026년 10월 16일 금요일',time:'오후 9:23'},{from:'me',text:'별 얘기 안 했어',date:'2026년 10월 16일 금요일',time:'오후 9:25'},{from:'them',text:'나한텐 얘기했는데',date:'2026년 10월 16일 금요일',time:'오후 9:29'},{from:'me',text:'무슨 얘기?',date:'2026년 10월 16일 금요일',time:'오후 9:20'},{from:'them',text:'주현언니한테 직접 들어 ㅋㅋㅋ',date:'2026년 10월 16일 금요일',time:'오후 9:25'},
  {from:'them',text:'일본?',date:'2026년 10월 17일 토요일',time:'오전 10:17'},{from:'me',text:'엉 준비중',date:'2026년 10월 17일 토요일',time:'오전 10:21'},{from:'them',text:'어제 말해봤어?',date:'2026년 10월 17일 토요일',time:'오전 10:29'},{from:'me',text:'아무 얘기도 안 했어....',date:'2026년 10월 17일 토요일',time:'오후 8:43'},{from:'them',text:'오늘 얘기하겠네',date:'2026년 10월 17일 토요일',time:'오후 8:50'},{from:'me',text:'할 얘기 있대',date:'2026년 10월 17일 토요일',time:'오후 8:51'},{from:'me',text:'어제도 그냥 밥만 먹었는데',date:'2026년 10월 17일 토요일',time:'오후 8:51'},{from:'them',text:'아니 같은 마음이면 니가 먼저 해',date:'2026년 10월 17일 토요일',time:'오후 8:56'},{from:'me',text:'그냥 생각이 많아서ㅠ',date:'2026년 10월 17일 토요일',time:'오후 8:56'},{from:'me',text:'이런 고민 하는 사람들이 많나? 너도 해봤잖아',date:'2026년 10월 17일 토요일',time:'오후 9:09'},{from:'them',text:'별거 아냐',date:'2026년 10월 17일 토요일',time:'오후 9:21'},{from:'them',text:'그리고 주현언니랑 너는 다르지 그런지 오래됐잖아',date:'2026년 10월 17일 토요일',time:'오후 9:21'},{from:'me',text:'지금 얘기중 언니 화장실 갔어',date:'2026년 10월 17일 토요일',time:'오후 9:43'},{from:'them',text:'언니가 뭐라는데?',date:'2026년 10월 17일 토요일',time:'오후 9:50'},{from:'them',text:'고백했어?',date:'2026년 10월 17일 토요일',time:'오후 9:51'}]},
- {id:'k3',name:'별이언니',profile:'',time:'오후 7:00',unread:1,messages:[{from:'them',text:'공연 잘 다녀와❤️',date:'2026년 10월 18일 일요일',time:'오후 7:00'}]}
+ {id:'k3',name:'별이언니',profile:'profile-default-blue.jpg',time:'오후 7:00',unread:1,messages:[{from:'them',text:'공연 잘 다녀와❤️',date:'2026년 10월 18일 일요일',time:'오후 7:00'}]}
  ],
  googleSearches:[{query:'30대 여자 선물'},{query:'동성 연애'}],
  notes:[
@@ -112,7 +143,7 @@ const STORY={
 };
 /* ================= 편집 영역 끝 ================= */
 const $=id=>document.getElementById(id);let active='lock',secret=false;
-function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));active=id;$('wall').style.display=['lock','home'].includes(id)?'block':'none';$('shade').style.display=['lock','home'].includes(id)?'block':'none';$('status').classList.toggle('dark',!['lock','home','kchat'].includes(id));}
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));active=id;$('wall').style.display=['lock','passcode','home'].includes(id)?'block':'none';$('shade').style.display=['lock','passcode','home'].includes(id)?'block':'none';$('status').classList.toggle('dark',!['lock','passcode','home','kchat'].includes(id));}
 function node(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
 function avatar(name,path){const d=node('div','av');if(path){const i=document.createElement('img');i.src=path;i.alt=name;d.append(i)}else d.textContent=String(name||'').slice(0,2);return d}
 function listRow(parent,title,preview,time,profile,initial,fn,unread=0){const b=node('button','listrow');b.append(avatar(initial||title,profile));const body=node('div','rowbody');const top=node('div','rowtitle');top.append(node('strong','',title),node('span','small',time||''));body.append(top,node('div','preview',preview||''));if(unread)body.append(node('span','unread',unread));b.append(body);b.onclick=fn;parent.append(b)}
@@ -143,5 +174,34 @@ $('igprofile').addEventListener('click',e=>{
 });
 $('igprofile').addEventListener('dragstart',e=>e.preventDefault());
 $('igSwitch').addEventListener('click',switchInstagram);
-$('lock').onclick=()=>show('home');$('homebar').onclick=()=>show('home');document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));render();
+// This is a fictional website passcode, not real device security.
+const STORY_PASSCODE='910329';
+let typedPasscode='';let phoneUnlocked=false;
+function updatePasscodeDots(){
+ const dots=$('passcodeDots').querySelectorAll('i');
+ dots.forEach((dot,i)=>dot.classList.toggle('filled',i<typedPasscode.length));
+ $('passcodeDots').setAttribute('aria-label',`암호 ${typedPasscode.length}자리 입력됨`);
+}
+function startPasscode(){typedPasscode='';$('passcodeError').textContent='';updatePasscodeDots();show('passcode')}
+function enterDigit(d){
+ if(active!=='passcode'||typedPasscode.length>=6)return;
+ typedPasscode+=d;updatePasscodeDots();$('passcodeError').textContent='';
+ if(typedPasscode.length===6){
+  if(typedPasscode===STORY_PASSCODE){phoneUnlocked=true;typedPasscode='';updatePasscodeDots();show('home')}
+  else {typedPasscode='';updatePasscodeDots();$('passcodeError').textContent='암호가 올바르지 않습니다. 다시 입력하세요.'}
+ }
+}
+$('lock').onclick=startPasscode;
+document.querySelectorAll('[data-digit]').forEach(btn=>btn.addEventListener('click',()=>enterDigit(btn.dataset.digit)));
+$('passcodeCancel').onclick=()=>show('lock');
+$('emergencyBtn').onclick=()=>{$('passcodeError').textContent='소설용 화면입니다. 실제 긴급전화는 연결되지 않습니다.'};
+document.addEventListener('keydown',e=>{
+ if(active!=='passcode')return;
+ if(/^\d$/.test(e.key))enterDigit(e.key);
+ if(e.key==='Backspace'){typedPasscode=typedPasscode.slice(0,-1);updatePasscodeDots();$('passcodeError').textContent=''}
+ if(e.key==='Escape')show('lock');
+});
+$('homebar').onclick=()=>phoneUnlocked?show('home'):startPasscode();
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const target=b.dataset.go; if(!phoneUnlocked&&target!=='lock')startPasscode();else show(target)});
+render();
 </script></body></html>
