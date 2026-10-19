@@ -1,6 +1,20 @@
 (() => {
   'use strict';
   const S = window.STORY;
+  // GitHub 저장소 루트에 업로드한 사진 경로 자동 보정
+  // story-data.js의 원래 내용을 수정하지 않습니다.
+  function fixImagePaths(value) {
+    if (!value || typeof value !== 'object') return;
+    for (const key of Object.keys(value)) {
+      const v = value[key];
+      if (typeof v === 'string' && /^(\.\/)?assets\//.test(v)) {
+        value[key] = v.replace(/^(\.\/)?assets\//, '');
+      } else if (v && typeof v === 'object') {
+        fixImagePaths(v);
+      }
+    }
+  }
+  fixImagePaths(S);
   const $ = id => document.getElementById(id);
   if (!S) { document.body.insertAdjacentHTML('beforeend','<p style="color:red">story-data.js 파일을 확인하세요.</p>'); return; }
   const txt = (node, value) => { node.textContent = String(value ?? ''); return node; };
@@ -37,12 +51,12 @@
   function renderGoogle(){const list=$('googleQueries');list.replaceChildren();(S.googleSearches||[]).forEach(g=>{const row=document.createElement('div');row.className='query';const clock=document.createElement('span');clock.style.color='#aaa';clock.textContent='◷';const name=document.createElement('span');txt(name,g.query);const x=document.createElement('button');x.textContent='×';x.title='화면 장식 (편집은 story-data.js에서)';row.append(clock,name,x);list.append(row);});}
   function renderPhotos(){const grid=$('photosGrid');grid.replaceChildren();(S.photos||[]).forEach((p,i)=>{const btn=document.createElement('button');const img=document.createElement('img');img.src=p.path;img.alt=p.caption||`사진 ${i+1}`;btn.append(img);btn.onclick=()=>{const full=$('photoFull');full.src=p.path;txt($('photoTitle'),p.caption||'사진');txt($('photoDate'),p.date||'');show('photoDetail');};grid.append(btn);});}
   function renderNotes(){const list=$('noteList');list.replaceChildren();(S.notes||[]).forEach(n=>{const item=document.createElement('div');item.className='note';const title=document.createElement('strong');txt(title,n.title);const date=document.createElement('div');date.className='sub';txt(date,n.date);const para=document.createElement('p');txt(para,n.body);item.append(title,date,para);list.append(item);});}
-  $('wall').style.backgroundImage=`url(${JSON.stringify(S.wallpaper||'assets/wallpaper.jpg')})`;
+  $('wall').style.backgroundImage=`url(${JSON.stringify(S.wallpaper||'wallpaper.jpg')})`;
   renderTime();if(S.liveClock)setInterval(renderTime,30000);renderCalls();renderConversations();renderGoogle();renderPhotos();renderNotes();
 
   function renderKakao(){const list=$('kakaoRooms');list.replaceChildren();(S.kakaoRooms||[]).forEach((r,i)=>{const btn=document.createElement('button');btn.className='kakao-room';btn.append(avatar(r.name,r.profile));const body=document.createElement('div');body.className='iteminfo';const title=document.createElement('strong');txt(title,r.name);const desc=document.createElement('div');desc.className='sub';txt(desc,r.messages?.at(-1)?.text||'');body.append(title,desc);const right=document.createElement('div');right.style.cssText='display:flex;flex-direction:column;align-items:end;gap:9px';const time=document.createElement('span');time.className='time';txt(time,r.time||'');right.append(time);if(r.unread){const n=document.createElement('span');n.className='unread';txt(n,r.unread);right.append(n)}btn.append(body,right);btn.onclick=()=>openKakao(i);list.append(btn)})}
   function openKakao(i){const r=S.kakaoRooms[i];txt($('kakaoTitle'),r.name);const list=$('kakaoMessages');list.replaceChildren();let lastDate=null;(r.messages||[]).forEach(m=>{const date=m.date??r.date??'';if(date!==lastDate){appendChatDate(list,date,'kakao-date');lastDate=date;}const row=document.createElement('div');row.className='kakao-msg '+(m.from==='me'?'me':'them');if(m.from!=='me')row.append(avatar(r.name,r.profile));const body=document.createElement('div');body.className='msgbody';if(m.from!=='me'){const sender=document.createElement('span');sender.className='sender';txt(sender,r.name);body.append(sender)}const bubble=document.createElement('div');bubble.className='kakaobubble';txt(bubble,m.text);const time=document.createElement('small');txt(time,m.time||'');body.append(bubble,time);row.append(body);list.append(row)});show('kakaoDetail');requestAnimationFrame(()=>list.scrollTop=list.scrollHeight)}
-  let instaAccount='main';function renderInsta(){const i=S.instagram?.[instaAccount];if(!i)return;txt($('instaHandle'),i.username);txt($('instaDisplay'),i.display);txt($('instaBio'),i.bio);txt($('instaFollowers'),i.followers);txt($('instaFollowing'),i.following);txt($('instaPostsCount'),i.posts?.length||0);$('instaProfileImg').src=i.profile||'assets/instagram.jpg';const grid=$('instaGrid');grid.replaceChildren();(i.posts||[]).forEach((post)=>{const btn=document.createElement('button');const img=document.createElement('img');img.src=post.image;img.alt=post.caption||'게시물';btn.append(img);btn.onclick=()=>{$('instaPostImg').src=post.image;txt($('instaPostCaption'),post.caption);show('instaPost')};grid.append(btn)})}
+  let instaAccount='main';function renderInsta(){const i=S.instagram?.[instaAccount];if(!i)return;txt($('instaHandle'),i.username);txt($('instaDisplay'),i.display);txt($('instaBio'),i.bio);txt($('instaFollowers'),i.followers);txt($('instaFollowing'),i.following);txt($('instaPostsCount'),i.posts?.length||0);$('instaProfileImg').src=i.profile||'instagram.jpg';const grid=$('instaGrid');grid.replaceChildren();(i.posts||[]).forEach((post)=>{const btn=document.createElement('button');const img=document.createElement('img');img.src=post.image;img.alt=post.caption||'게시물';btn.append(img);btn.onclick=()=>{$('instaPostImg').src=post.image;txt($('instaPostCaption'),post.caption);show('instaPost')};grid.append(btn)})}
   let lastTap=0;let tapTimer;const av=$('instaAvatar');av.addEventListener('click',()=>{const now=Date.now();if(now-lastTap<420){instaAccount=instaAccount==='main'?'secret':'main';renderInsta();lastTap=0;clearTimeout(tapTimer)}else lastTap=now});av.addEventListener('dblclick',e=>{e.preventDefault();if(lastTap!==0){instaAccount=instaAccount==='main'?'secret':'main';renderInsta();lastTap=0}});
   renderKakao();renderInsta();
   // 간단한 터치 잠금 해제: 탭하거나 위로 스와이프
