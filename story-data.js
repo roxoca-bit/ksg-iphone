@@ -85,12 +85,34 @@ CJ대한통운 매일오네(O-NE)
       {from:'them', text:'공연 잘 다녀와❤️', time:'어제'}
     ]}
   ],
-  instagram: {
-    main: {username:'hi_sseulgi', display:'슬기 Seulgi', bio:'끄적끄적 취미 공간 👀', followers:'1,198만', following:'25', profile:'wallpaper.jpg', posts:[
-      {image:'wallpaper.jpg',caption:'첫 번째 게시물'}, {image:'wallpaper.jpg',caption:'두 번째 게시물'}
-    ]},
-    secret: {username:'xanxseul', display:'🔒', bio:'🐻', followers:'12', following:'13', profile:'wallpaper.jpg', posts:[
-      {image:'wallpaper.jpg',caption:'비계 게시물. 자유롭게 수정해 줘.'}
-    ]}
-  }
-};
+    instagram: {
+    main: {
+      username: 'hi_sseulgi',       // 본계 아이디
+      display: '슬기 Seulgi',       // 표시 이름
+      profile: 'assets/insta-main-profile.jpg',
+      followers: '1,198만',         // 팔로워 숫자
+      following: '25',             // 팔로잉 숫자
+      bio: '끄적끄적 취미 공간 👀\n@by.sseulgi\nyoutube.com/@hi_sseulgi_',
+      posts: [
+        { image: 'assets/insta-post-02.jpg', caption: '오늘의 착장', date: '2026-10-19' },
+        { image: 'assets/insta-post-05.jpg', caption: '산책', date: '2026-10-18' },
+        { image: 'assets/insta-post-08.jpg', caption: 'stage', date: '2026-10-17' },
+        { image: 'assets/insta-post-06.jpg', caption: '귀여운 것들', date: '2026-10-16' },
+        { image: 'assets/insta-post-03.jpg', caption: '외출', date: '2026-10-15' },
+        { image: 'assets/insta-post-01.jpg', caption: '좋았던 날', date: '2026-10-14' },
+        { image: 'assets/insta-post-04.jpg', caption: 'black mood', date: '2026-10-13' },
+        { image: 'assets/insta-post-07.jpg', caption: 'mirror selfie', date: '2026-10-12' }
+      ]
+    },
+    secret: {
+      username: 'xanxseul',   // 비계 아이디
+      display: '팔로우x',
+      profile: 'assets/insta-secret-shoes.jpg',
+      followers: '12',
+      following: '7',
+      bio: '💜\n🔒 private archive',
+      posts: [
+        { image: 'assets/insta-secret-shoes.jpg', caption: '여기에 비계 게시물 문구 쓰기', date: '2026-10-19' }
+      ]
+    }
+  },
